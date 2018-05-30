@@ -11,8 +11,11 @@ class Brand(models.Model):
 
 class Category(models.Model):
     parent = models.ForeignKey("self", on_delete=models.PROTECT, verbose_name="Батьківська категорія",
-                               null=True, default=None)
+                               null=True, default=None, related_name="children_set")
     name = models.CharField(max_length=150, verbose_name="Назва категорії", unique=True)
+
+    def children(self):
+        return self.children_set.all()
 
     class Meta:
         verbose_name = "Категорія"
@@ -21,8 +24,8 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name="Назва товару", unique=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категорія")
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категорія", related_name="products")
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name="brands")
 
     photo = models.ImageField(upload_to="products/", null=True, blank=True)
     reviews = models.IntegerField(default=0, verbose_name="Кількість переглядів")

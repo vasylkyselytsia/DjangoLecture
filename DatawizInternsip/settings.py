@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "DatawizInternsip.middleware.SimpleMiddleware"
 ]
 
 ROOT_URLCONF = 'DatawizInternsip.urls'
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'DatawizInternsip.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +120,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
+}
 
 
 # Static files (CSS, JavaScript, Images)

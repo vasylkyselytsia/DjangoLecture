@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "DatawizInternsip.middleware.SimpleMiddleware"
+    # "DatawizInternsip.middleware.SimpleMiddleware"
 ]
 
 ROOT_URLCONF = 'DatawizInternsip.urls'

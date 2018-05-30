@@ -15,6 +15,7 @@ class SimpleMiddleware(object):
 
     def process_response(self, request, response):
         print("BookMiddleware process_response executed")
+        print(response.status_code)
         return response
 
     def __call__(self, request):

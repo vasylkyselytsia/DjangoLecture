@@ -47,7 +47,7 @@ class Currency(models.Model):
 
 
 class ProductPrice(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="prices")
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     original = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     discount = models.DecimalField(max_digits=14, decimal_places=2, default=0)
@@ -55,3 +55,22 @@ class ProductPrice(models.Model):
     class Meta:
         db_table = "api_product_price"
         unique_together = (("product", "currency"),)
+
+
+class Order(models.Model):
+    total_price = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    products_qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    closed = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    class Meta:
+        db_table = "api_order_item"
+        unique_together = (("order", "product"),)
